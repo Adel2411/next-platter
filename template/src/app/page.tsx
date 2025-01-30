@@ -3,6 +3,7 @@
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { handleError } from "@/lib/errorHandler";
+import { showSuccessToast } from "@/lib/toastHandler";
 
 export default function Home() {
   const throwError = () => {
@@ -14,6 +15,10 @@ export default function Home() {
     }
   };
 
+  const showSuccess = () => {
+    showSuccessToast("This is a success message");
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col justify-center items-center gap-8">
@@ -23,9 +28,12 @@ export default function Home() {
         <h1 className="text-2xl font-semibold">
           Welcome to Adel&apos;s Next.js Starter Template!
         </h1>
-        <Button variant="destructive" onClick={throwError}>
-          Error Handler test
-        </Button>
+        <div className="flex justify-center items-center gap-4">
+          <Button variant="destructive" onClick={throwError}>
+            Error Handler test
+          </Button>
+          <Button onClick={showSuccess}>Suceess Toast test</Button>
+        </div>
       </div>
     </>
   );

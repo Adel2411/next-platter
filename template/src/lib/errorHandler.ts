@@ -1,5 +1,5 @@
-import { toast } from "@/hooks/use-toast";
 import { ApiError, ErrorWithMessage } from "@/types";
+import { showErrorToast } from "./toastHandler";
 
 function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
   return (
@@ -21,7 +21,7 @@ function isApiError(error: unknown): error is ApiError {
 
 export function handleError(error: unknown): string {
   // Log the error for debugging
-  console.error(error);
+  console.log(error);
 
   let errorMessage = "An unexpected error occurred. Please try again.";
 
@@ -33,11 +33,7 @@ export function handleError(error: unknown): string {
   }
 
   // Display the error as a toast
-  toast({
-    variant: "destructive",
-    title: "Error",
-    description: errorMessage,
-  });
+  showErrorToast(errorMessage);
 
   return errorMessage;
 }

@@ -1,3 +1,5 @@
+import { handleError } from "./errorHandler";
+
 type FetchOptions = RequestInit & {
   headers?: Record<string, string>;
 };
@@ -5,26 +7,32 @@ type FetchOptions = RequestInit & {
 const fetchInstance = async <T>(
   url: string,
   options: FetchOptions = {},
-  includeToken: boolean = true,
+  token?: string,
 ): Promise<T> => {
-  const token = includeToken ? localStorage.getItem("token") : null;
-
   const headers = {
     "Content-Type": "application/json",
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+      ...options,
+      headers,
+    });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({})); // Parse error response
+      throw {
+        status: response.status,
+        data: errorData,
+      };
+    }
+
+    return response.json() as Promise<T>;
+  } catch (error) {
+    throw handleError(error); // Use centralized error handling with toasts
   }
-
-  return response.json() as Promise<T>;
 };
 
 export default fetchInstance;
