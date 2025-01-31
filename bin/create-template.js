@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
+import { spawn } from "child_process";
 import { fileURLToPath } from "url";
 import chalk from "chalk";
 import ora from "ora";
@@ -58,7 +58,7 @@ const spinner = ora(chalk.blue(`Creating project "${projectName}"...`)).start();
 copyFiles(templateDir, projectDir);
 
 // Stop spinner and log success
-spinner.succeed(chalk.green(`Project "${projectName}" created successfully!`));
+spinner.succeed(chalk(`Project "${projectName}" created successfully!`));
 
 // Start spinner for dependency installation
 const installSpinner = ora(chalk.blue("Installing dependencies...")).start();
@@ -66,17 +66,15 @@ const installSpinner = ora(chalk.blue("Installing dependencies...")).start();
 // Install dependencies
 try {
   process.chdir(projectDir);
-  execSync("npm install", { stdio: "pipe" }); // Use "pipe" to capture output
-  installSpinner.succeed(chalk.green("Dependencies installed successfully!"));
-} catch (error) {
-  installSpinner.fail(chalk.red("Failed to install dependencies."));
-  console.error(chalk.red(error.message));
-  process.exit(1);
-}
+  const installProcess = spawn("npm", ["install"], { stdio: "inherit" });
 
-// Done! Show a beautiful boxed message
-const successMessage = boxen(
-  chalk(`
+  installProcess.on("close", (code) => {
+    if (code === 0) {
+      installSpinner.succeed(chalk("Dependencies installed successfully!"));
+
+      // Done! Show a beautiful boxed message
+      const successMessage = boxen(
+        chalk(`
 Done! Your project is ready.
 
 Run the following commands to start:
@@ -84,11 +82,21 @@ Run the following commands to start:
   ${chalk.cyan(`cd ${projectName}`)}
   ${chalk.cyan("npm run dev")}
 `),
-  {
-    padding: 0.5,
-    margin: 1,
-    borderStyle: "round",
-  },
-);
+        {
+          padding: 0.5,
+          margin: 1,
+          borderStyle: "round",
+        },
+      );
 
-console.log(successMessage);
+      console.log(successMessage);
+    } else {
+      installSpinner.fail(chalk.red("Failed to install dependencies."));
+      process.exit(1);
+    }
+  });
+} catch (error) {
+  installSpinner.fail(chalk.red("Failed to install dependencies."));
+  console.error(chalk.red(error.message));
+  process.exit(1);
+}
