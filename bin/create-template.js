@@ -6,15 +6,21 @@ import { fileURLToPath } from "url";
 import chalk from "chalk";
 import ora from "ora";
 import boxen from "boxen";
+import inquirer from "inquirer";
 
 // Get the project name from the command line
-const projectName = process.argv[2];
+let projectName = process.argv[2];
+
 if (!projectName) {
-  console.error(chalk.red("Please provide a project name."));
-  console.log(
-    chalk.blue("Usage: npx create-next-starter-template <project-name>"),
-  );
-  process.exit(1);
+  const answers = await inquirer.prompt([
+    {
+      type: "input",
+      name: "projectName",
+      message: "Please provide a project name:",
+      validate: (input) => (input ? true : "Project name cannot be empty"),
+    },
+  ]);
+  projectName = answers.projectName;
 }
 
 // Define paths
@@ -53,6 +59,13 @@ const copyFiles = (source, destination) => {
 
 // Start spinner for project creation
 const spinner = ora(chalk.blue(`Creating project "${projectName}"...`)).start();
+
+// Handle Ctrl+C to stop the process
+process.on("SIGINT", () => {
+  console.log(chalk.red("\nProcess interrupted. Cleaning up..."));
+  spinner.fail("Process interrupted.");
+  process.exit(1);
+});
 
 // Copy template files to the new project directory
 copyFiles(templateDir, projectDir);

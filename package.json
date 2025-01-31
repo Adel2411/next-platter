@@ -19,6 +19,7 @@
   "dependencies": {
     "boxen": "^8.0.1",
     "chalk": "^5.4.1",
+    "inquirer": "^12.3.3",
     "ora": "^8.1.1"
   }
 }
