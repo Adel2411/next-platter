@@ -1,35 +1,28 @@
-export interface LoginResponse {
-  token: string;
+import z from "zod";
+import { loginSchema, registerSchema } from "../schema";
+
+export type RegisterCredentials = z.infer<typeof registerSchema>;
+
+export type RegisterInput = Omit<RegisterCredentials, "confirmPassword">;
+
+export interface RegisterResponse {
+  accessToken: string;
   user: {
     id: string;
+    fullName: string;
     email: string;
-    name: string;
   };
 }
 
-export interface UserProfileResponse {
-  id: string;
-  email: string;
-  name: string;
-  createdAt: string;
-}
+export type LoginCredentials = z.infer<typeof loginSchema>;
 
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
+export type LoginInput = LoginCredentials;
 
-export interface RegisterCredentials {
-  email: string;
-  password: string;
-  name: string;
-}
-
-export interface RegisterResponse {
-  token: string;
+export interface LoginResponse {
+  accessToken: string;
   user: {
     id: string;
+    fullName: string;
     email: string;
-    name: string;
   };
 }

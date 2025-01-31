@@ -1,34 +1,23 @@
 import fetchInstance from "@/lib/api";
 import {
-  LoginCredentials,
+  LoginInput,
   LoginResponse,
-  RegisterCredentials,
+  RegisterInput,
   RegisterResponse,
-  UserProfileResponse,
 } from "../types";
 
-export const login = async (
-  credentials: LoginCredentials,
-): Promise<LoginResponse> => {
-  return fetchInstance<LoginResponse>("/auth/login", {
-    method: "POST",
-    body: JSON.stringify(credentials),
-  }); // No token needed for login
-};
-
-export const getUserProfile = async (): Promise<UserProfileResponse> => {
-  return fetchInstance<UserProfileResponse>(
-    "/user/profile",
-    { method: "GET" },
-    "token",
-  ); // Token required
-};
-
 export const register = async (
-  userDetails: RegisterCredentials,
+  inputs: RegisterInput,
 ): Promise<RegisterResponse> => {
   return fetchInstance<LoginResponse>("/auth/register", {
     method: "POST",
-    body: JSON.stringify(userDetails),
+    body: JSON.stringify(inputs),
   }); // No token needed for registration
+};
+
+export const login = async (inputs: LoginInput): Promise<LoginResponse> => {
+  return fetchInstance<LoginResponse>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(inputs),
+  }); // No token needed for login
 };
