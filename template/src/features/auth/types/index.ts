@@ -1,9 +1,16 @@
 import z from "zod";
-import { loginSchema, registerSchema } from "../schema";
+import {
+  forgotPasswordSchema,
+  loginSchema,
+  registerSchema,
+  resetPasswordSchema,
+  verifyEmailSchema,
+} from "../schema";
 
-export type RegisterCredentials = z.infer<typeof registerSchema>;
+// Register types
+export type RegisterInputs = z.infer<typeof registerSchema>;
 
-export type RegisterInput = Omit<RegisterCredentials, "confirmPassword">;
+export type RegisterBody = Omit<RegisterInputs, "confirmPassword">;
 
 export interface RegisterResponse {
   accessToken: string;
@@ -14,9 +21,10 @@ export interface RegisterResponse {
   };
 }
 
-export type LoginCredentials = z.infer<typeof loginSchema>;
+// Login types
+export type LoginInputs = z.infer<typeof loginSchema>;
 
-export type LoginInput = LoginCredentials;
+export type LoginBody = LoginInputs;
 
 export interface LoginResponse {
   accessToken: string;
@@ -26,3 +34,32 @@ export interface LoginResponse {
     email: string;
   };
 }
+
+// Verify email types
+export type VerifyEmailInputs = z.infer<typeof verifyEmailSchema>;
+
+export type VerifyEmailBody = VerifyEmailInputs;
+
+export interface VerifyEmailResponse {
+  message: string;
+}
+
+// Forgot password types
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+
+export type ForgotPasswordBody = ForgotPasswordInput;
+
+export type ForgotPasswordResponse = {
+  message: string;
+};
+
+// Reset password types
+export type BaseResetPassword = z.infer<typeof resetPasswordSchema>;
+
+export type ResetPasswordInputs = Omit<BaseResetPassword, "token">;
+
+export type ResetPasswordBody = Omit<BaseResetPassword, "confirmPassword">;
+
+export type ResetPasswordResponse = {
+  message: string;
+};

@@ -65,4 +65,38 @@ const loginSchema = z
     },
   );
 
-export { registerSchema, loginSchema };
+// Forgot password form schema
+const forgotPasswordSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+// Reset password form schema
+const resetPasswordSchema = z
+  .object({
+    token: z.string().min(1, "Token is required"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .regex(passwordRegex, passwordErrorMessage),
+    confirmPassword: z
+      .string()
+      .min(8, "Confirm Password must be at least 8 characters long")
+      .regex(passwordRegex, passwordErrorMessage),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+// Verify email form schema with OTP code
+const verifyEmailSchema = z.object({
+  otp: z.number().int().positive("OTP code must be a positive integer"),
+});
+
+export {
+  registerSchema,
+  loginSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  verifyEmailSchema,
+};

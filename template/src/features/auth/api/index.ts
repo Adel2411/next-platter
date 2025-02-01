@@ -1,23 +1,45 @@
 import fetchInstance from "@/lib/api";
 import {
-  LoginInput,
+  ForgotPasswordBody,
+  ForgotPasswordResponse,
+  LoginBody,
   LoginResponse,
-  RegisterInput,
+  RegisterBody,
   RegisterResponse,
+  VerifyEmailBody,
+  VerifyEmailResponse,
 } from "../types";
 
 export const register = async (
-  inputs: RegisterInput,
+  body: RegisterBody,
 ): Promise<RegisterResponse> => {
   return fetchInstance<LoginResponse>("/auth/register", {
     method: "POST",
-    body: JSON.stringify(inputs),
+    body: JSON.stringify(body),
   }); // No token needed for registration
 };
 
-export const login = async (inputs: LoginInput): Promise<LoginResponse> => {
+export const login = async (body: LoginBody): Promise<LoginResponse> => {
   return fetchInstance<LoginResponse>("/auth/login", {
     method: "POST",
-    body: JSON.stringify(inputs),
+    body: JSON.stringify(body),
   }); // No token needed for login
+};
+
+export const verifyEmail = async (
+  body: VerifyEmailBody,
+): Promise<VerifyEmailResponse> => {
+  return fetchInstance<VerifyEmailResponse>("/auth/verify-email", {
+    method: "POST",
+    body: JSON.stringify(body),
+  }); // Token needed for verifying email
+};
+
+export const forgotPassword = async (
+  body: ForgotPasswordBody,
+): Promise<ForgotPasswordResponse> => {
+  return fetchInstance<ForgotPasswordResponse>("/auth/forgot-password", {
+    method: "POST",
+    body: JSON.stringify(body),
+  }); // No token needed for forgot password
 };
