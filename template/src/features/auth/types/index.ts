@@ -3,6 +3,8 @@ import {
   forgotPasswordSchema,
   loginSchema,
   registerSchema,
+  resetPasswordBodySchema,
+  resetPasswordInputsSchema,
   resetPasswordSchema,
   verifyEmailSchema,
 } from "../schema";
@@ -45,9 +47,9 @@ export interface VerifyEmailResponse {
 }
 
 // Forgot password types
-export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordInputs = z.infer<typeof forgotPasswordSchema>;
 
-export type ForgotPasswordBody = ForgotPasswordInput;
+export type ForgotPasswordBody = ForgotPasswordInputs;
 
 export type ForgotPasswordResponse = {
   message: string;
@@ -56,9 +58,9 @@ export type ForgotPasswordResponse = {
 // Reset password types
 export type BaseResetPassword = z.infer<typeof resetPasswordSchema>;
 
-export type ResetPasswordInputs = Omit<BaseResetPassword, "token">;
+export type ResetPasswordInputs = z.infer<typeof resetPasswordInputsSchema>;
 
-export type ResetPasswordBody = Omit<BaseResetPassword, "confirmPassword">;
+export type ResetPasswordBody = z.infer<typeof resetPasswordBodySchema>;
 
 export type ResetPasswordResponse = {
   message: string;

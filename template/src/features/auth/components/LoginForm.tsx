@@ -74,7 +74,7 @@ function LoginForm() {
           className="w-full"
           disabled={form.formState.isSubmitting}
         >
-          Register
+          Login
         </Button>
       </form>
     </Form>

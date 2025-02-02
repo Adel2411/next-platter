@@ -65,26 +65,33 @@ const forgotPasswordSchema = z.object({
 });
 
 // Reset password form schema
-const resetPasswordSchema = z
-  .object({
-    token: z.string().min(1, "Token is required"),
-    password: z
-      .string()
-      .min(8, "Password must be 8+ chars")
-      .regex(passwordRegex, passwordErrorMessage),
-    confirmPassword: z
-      .string()
-      .min(8, "Confirm Password must be 8+ chars")
-      .regex(passwordRegex, passwordErrorMessage),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
+const resetPasswordBaseSchema = z.object({
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+  confirmPassword: z
+    .string()
+    .min(8, "Confirm Password must be at least 8 characters long"),
+  token: z.string().min(1, "Token is required"),
+});
+
+const resetPasswordInputsSchema = resetPasswordBaseSchema.omit({
+  token: true,
+});
+
+const resetPasswordSchema = resetPasswordInputsSchema.refine(
+  (data) => data.password === data.confirmPassword,
+  {
     message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+    ["path"]: ["confirmPassword"],
+  },
+);
+
+const resetPasswordBodySchema = resetPasswordBaseSchema.omit({
+  confirmPassword: true,
+});
 
 // Verify email form schema with OTP code
 const verifyEmailSchema = z.object({
-  otp: z.number().int().positive("OTP must be positive"),
+  otp: z.string().min(6, "OTP must be 6 digits").max(6, "OTP must be 6 digits"),
 });
 
 export {
@@ -92,5 +99,7 @@ export {
   loginSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
+  resetPasswordInputsSchema,
+  resetPasswordBodySchema,
   verifyEmailSchema,
 };

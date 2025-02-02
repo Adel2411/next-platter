@@ -1,5 +1,7 @@
+import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
+
 function ResetPasswordPage() {
-  return <div>ResetPassword</div>;
+  return <ResetPasswordForm />;
 }
 
 export default ResetPasswordPage;
