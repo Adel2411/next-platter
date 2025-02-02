@@ -30,7 +30,6 @@ function VerifyEmailForm() {
   });
 
   async function onSubmit(values: VerifyEmailInputs) {
-    new Promise((resolve) => setTimeout(resolve, 1000));
     console.log("values", values);
     form.reset();
   }
