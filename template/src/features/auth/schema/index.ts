@@ -1,20 +1,17 @@
 import { z } from "zod";
 
 // Password validation regex
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 const passwordErrorMessage =
-  "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character";
+  "Password must be 8+ chars, include upper, lower, and number";
 
 // Full name validation regex
-const fullNameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
-const fullNameErrorMessage =
-  "Full name must contain only alphabetic characters and spaces";
+const fullNameRegex = /^[A-Za-z\s]+$/;
+const fullNameErrorMessage = "Full name must contain only letters and spaces";
 
 // Username validation regex
 const usernameRegex = /^[A-Za-z][A-Za-z0-9]*$/;
-const usernameErrorMessage =
-  "Username must start with an alphabetic character, can contain numbers, and cannot have spaces";
+const usernameErrorMessage = "Username must start with a letter, no spaces";
 
 // Register form schema
 const registerSchema = z
@@ -27,17 +24,14 @@ const registerSchema = z
       .string()
       .min(1, "Username is required")
       .regex(usernameRegex, usernameErrorMessage),
-    email: z
-      .string()
-      .min(1, "Email is required")
-      .email("Invalid email address"),
+    email: z.string().min(1, "Email is required").email("Invalid email"),
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters long")
+      .min(8, "Password must be 8+ chars")
       .regex(passwordRegex, passwordErrorMessage),
     confirmPassword: z
       .string()
-      .min(8, "Confirm Password must be at least 8 characters long")
+      .min(8, "Confirm Password must be 8+ chars")
       .regex(passwordRegex, passwordErrorMessage),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -51,7 +45,7 @@ const loginSchema = z
     identifier: z.string().min(1, "Email or username is required"), // Identifier can be either email or username
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters long")
+      .min(8, "Password must be 8+ chars")
       .regex(passwordRegex, passwordErrorMessage),
   })
   .refine(
@@ -60,14 +54,14 @@ const loginSchema = z
         ? z.string().email().safeParse(data.identifier).success
         : true,
     {
-      message: "Invalid email address",
+      message: "Invalid email",
       path: ["identifier"],
     },
   );
 
 // Forgot password form schema
 const forgotPasswordSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email"),
 });
 
 // Reset password form schema
@@ -76,11 +70,11 @@ const resetPasswordSchema = z
     token: z.string().min(1, "Token is required"),
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters long")
+      .min(8, "Password must be 8+ chars")
       .regex(passwordRegex, passwordErrorMessage),
     confirmPassword: z
       .string()
-      .min(8, "Confirm Password must be at least 8 characters long")
+      .min(8, "Confirm Password must be 8+ chars")
       .regex(passwordRegex, passwordErrorMessage),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -90,7 +84,7 @@ const resetPasswordSchema = z
 
 // Verify email form schema with OTP code
 const verifyEmailSchema = z.object({
-  otp: z.number().int().positive("OTP code must be a positive integer"),
+  otp: z.number().int().positive("OTP must be positive"),
 });
 
 export {
