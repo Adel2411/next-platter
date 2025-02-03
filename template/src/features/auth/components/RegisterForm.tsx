@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 function RegisterForm() {
   const form = useForm<RegisterInputs>({
@@ -35,41 +37,43 @@ function RegisterForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-2">
-          <FormField
-            control={form.control}
-            name="fullName"
-            render={({ field }) => (
-              <FormItem className="space-y-0">
-                <FormLabel>Full name</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={form.formState.isSubmitting}
-                    placeholder="full name..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem className="space-y-0">
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={form.formState.isSubmitting}
-                    placeholder="username..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="space-y-4 w-80">
+          <div className="flex items-center justify-center gap-2">
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem className="space-y-0">
+                  <FormLabel>Full name</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={form.formState.isSubmitting}
+                      placeholder="full name..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="space-y-0">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={form.formState.isSubmitting}
+                      placeholder="username..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="email"
@@ -132,6 +136,12 @@ function RegisterForm() {
         >
           Register
         </Button>
+        <FormDescription>
+          Already have an account?
+          <Button variant="link" asChild>
+            <Link href={"/login"}>login</Link>
+          </Button>
+        </FormDescription>
       </form>
     </Form>
   );

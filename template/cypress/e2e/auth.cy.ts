@@ -3,27 +3,27 @@ describe("Authentication Routes Navigation", () => {
 
   it("should load the login page", () => {
     cy.visit(`${baseUrl}/login`);
-    cy.contains("Login"); // Adjust according to your login page content
+    cy.get("h1").contains("Login"); // Ensure the text is within an h1 element
   });
 
   it("should load the register page", () => {
     cy.visit(`${baseUrl}/register`);
-    cy.contains("Register"); // Adjust according to your signup page content
+    cy.get("h1").contains("Register"); // Ensure the text is within an h1 element
   });
 
   it("should load the verify email page", () => {
     cy.visit(`${baseUrl}/verify-email`);
-    cy.contains("Verify Email"); // Adjust according to your verify email page content
+    cy.get("h1").contains("Verify Email"); // Ensure the text is within an h1 element
   });
 
   it("should load the forgot password page", () => {
     cy.visit(`${baseUrl}/forgot-password`);
-    cy.contains("Send Reset Password Email"); // Adjust according to your forgot password page content
+    cy.get("h1").contains("Forgot Password"); // Ensure the text is within an h1 element
   });
 
   it("should load the reset password page", () => {
     cy.visit(`${baseUrl}/reset-password`);
-    cy.contains("Change Password"); // Adjust according to your reset password page content
+    cy.get("h1").contains("Reset Password"); // Ensure the text is within an h1 element
   });
 
   it("should fill out and submit the register form", () => {

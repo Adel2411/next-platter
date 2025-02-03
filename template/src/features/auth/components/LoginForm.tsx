@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { LoginInputs } from "../types";
 import { loginSchema } from "../schema";
+import Link from "next/link";
 
 function LoginForm() {
   const form = useForm<LoginInputs>({
@@ -68,6 +70,11 @@ function LoginForm() {
               </FormItem>
             )}
           />
+          <FormDescription>
+            <Button variant="link" size="sm" className="p-0" asChild>
+              <Link href={"/forgot-password"}>Forgot your password?</Link>
+            </Button>
+          </FormDescription>
         </div>
         <Button
           type="submit"
@@ -76,6 +83,12 @@ function LoginForm() {
         >
           Login
         </Button>
+        <FormDescription>
+          Don't have an account?
+          <Button variant="link" asChild>
+            <Link href={"/register"}>register</Link>
+          </Button>
+        </FormDescription>
       </form>
     </Form>
   );
