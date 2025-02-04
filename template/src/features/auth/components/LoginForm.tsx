@@ -27,7 +27,7 @@ function LoginForm() {
   });
 
   async function onSubmit(values: LoginInputs) {
-    console.log("values", values);
+    console.log(values);
     form.reset();
   }
 

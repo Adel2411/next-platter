@@ -14,9 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { ResetPasswordBody, ResetPasswordInputs } from "../types";
 import { resetPasswordSchema } from "../schema";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function ResetPasswordForm() {
+  const router = useRouter();
+
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -32,14 +34,16 @@ function ResetPasswordForm() {
     const { confirmPassword, ...valuesWithoutConfirmPassword } = values;
     if (!token) {
       console.log("Token not found");
+      form.reset();
       return;
     }
     const body: ResetPasswordBody = {
       ...valuesWithoutConfirmPassword,
       token,
     };
-    console.log("body", body);
+    console.log(body);
     form.reset();
+    router.push("/login");
   }
 
   return (

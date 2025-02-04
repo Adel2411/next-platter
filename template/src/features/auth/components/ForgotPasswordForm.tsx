@@ -27,7 +27,7 @@ function ForgotPasswordForm() {
   });
 
   async function onSubmit(values: ForgotPasswordInputs) {
-    console.log("values", values);
+    console.log(values);
     form.reset();
     router.push("/reset-password");
   }

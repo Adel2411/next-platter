@@ -31,7 +31,7 @@ function VerifyEmailForm() {
   });
 
   async function onSubmit(values: VerifyEmailInputs) {
-    console.log("values", values);
+    console.log(values);
     form.reset();
   }
 

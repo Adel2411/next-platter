@@ -1,6 +1,6 @@
 "use client";
 
-import { RegisterInputs } from "../types";
+import { RegisterBody, RegisterInputs } from "../types";
 import { registerSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -33,7 +33,8 @@ function RegisterForm() {
   });
 
   async function onSubmit(values: RegisterInputs) {
-    console.log("values", values);
+    const { confirmPassword, ...body } = values;
+    console.log(body);
     form.reset();
     router.push("/verify-email");
   }
