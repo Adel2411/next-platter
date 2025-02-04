@@ -66,7 +66,7 @@ const forgotPasswordSchema = z.object({
 
 // Reset password form schema
 const resetPasswordBaseSchema = z.object({
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  newPassword: z.string().min(8, "Password must be at least 8 characters long"),
   confirmPassword: z
     .string()
     .min(8, "Confirm Password must be at least 8 characters long"),
@@ -78,7 +78,7 @@ const resetPasswordInputsSchema = resetPasswordBaseSchema.omit({
 });
 
 const resetPasswordSchema = resetPasswordInputsSchema.refine(
-  (data) => data.password === data.confirmPassword,
+  (data) => data.newPassword === data.confirmPassword,
   {
     message: "Passwords don't match",
     ["path"]: ["confirmPassword"],

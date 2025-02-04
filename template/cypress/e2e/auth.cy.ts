@@ -164,7 +164,7 @@ describe("Authentication Routes", () => {
       });
     });
 
-    describe("different urls for reset-password page", () => {
+    describe("different urls for reset password page", () => {
       it("should fill out and submit the reset password form and print token not found in the console", () => {
         cy.visit(`${baseUrl}/reset-password`);
 
@@ -174,14 +174,14 @@ describe("Authentication Routes", () => {
         });
 
         // Fill out the form
-        cy.get('input[name="password"]').type("Password123");
-        cy.get('input[name="confirmPassword"]').type("Password123");
+        cy.get('input[name="newPassword"]').type("newPassword123");
+        cy.get('input[name="confirmPassword"]').type("newPassword123");
 
         // Submit the form
         cy.get('button[type="submit"]').click();
 
         // Optionally, check if the form fields are reset after submission
-        cy.get('input[name="password"]').should("have.value", "");
+        cy.get('input[name="newPassword"]').should("have.value", "");
         cy.get('input[name="confirmPassword"]').should("have.value", "");
 
         // Assert that the console.log was called with the expected values
@@ -197,26 +197,26 @@ describe("Authentication Routes", () => {
         });
 
         // Fill out the form
-        cy.get('input[name="password"]').type("Password123");
-        cy.get('input[name="confirmPassword"]').type("Password123");
+        cy.get('input[name="newPassword"]').type("newPassword123");
+        cy.get('input[name="confirmPassword"]').type("newPassword123");
 
         // Submit the form
         cy.get('button[type="submit"]').click();
 
         // Optionally, check if the form fields are reset after submission
-        cy.get('input[name="password"]').should("have.value", "");
+        cy.get('input[name="newPassword"]').should("have.value", "");
         cy.get('input[name="confirmPassword"]').should("have.value", "");
 
         // Assert that the console.log was called with the expected values
         cy.get("@consoleLog").should("be.calledWith", {
           token: "abcd123456",
-          password: "Password123",
+          newPassword: "newPassword123",
         });
       });
     });
   });
 
-  describe.only("Authentication Pages Navigation", () => {
+  describe("Authentication Pages Navigation", () => {
     it("should navigate to the login page from the register page", () => {
       // Visit the register page
       cy.visit(`${baseUrl}/register`);
@@ -287,7 +287,7 @@ describe("Authentication Routes", () => {
       cy.visit(`${baseUrl}/reset-password?token=abcd123456`);
 
       // Fill out the form
-      cy.get('input[name="password"]').type("newPassword123");
+      cy.get('input[name="newPassword"]').type("newPassword123");
       cy.get('input[name="confirmPassword"]').type("newPassword123");
 
       // Submit the form

@@ -25,7 +25,7 @@ function ResetPasswordForm() {
   const form = useForm<ResetPasswordInputs>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      password: "",
+      newPassword: "",
       confirmPassword: "",
     },
   });
@@ -52,7 +52,7 @@ function ResetPasswordForm() {
         <div className="space-y-2">
           <FormField
             control={form.control}
-            name="password"
+            name="newPassword"
             render={({ field }) => (
               <FormItem className="space-y-0">
                 <FormLabel>Password</FormLabel>
