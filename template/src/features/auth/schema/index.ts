@@ -3,15 +3,18 @@ import { z } from "zod";
 // Password validation regex
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 const passwordErrorMessage =
-  "Password must be 8+ chars, include upper, lower, and number";
+  "- Must have one uppercase letter\n" +
+  "- Must have one lowercase letter\n" +
+  "- Must have one number";
 
 // Full name validation regex
 const fullNameRegex = /^[A-Za-z\s]+$/;
-const fullNameErrorMessage = "Full name must contain only letters and spaces";
+const fullNameErrorMessage = "Full name can only contain letters and spaces.";
 
 // Username validation regex
 const usernameRegex = /^[A-Za-z][A-Za-z0-9]*$/;
-const usernameErrorMessage = "Username must start with a letter, no spaces";
+const usernameErrorMessage =
+  "Username must start with a letter and contain no spaces.";
 
 // Register form schema
 const registerSchema = z
@@ -27,11 +30,11 @@ const registerSchema = z
     email: z.string().min(1, "Email is required").email("Invalid email"),
     password: z
       .string()
-      .min(8, "Password must be 8+ chars")
+      .min(8, "Password must be at least 8 chars long")
       .regex(passwordRegex, passwordErrorMessage),
     confirmPassword: z
       .string()
-      .min(8, "Confirm Password must be 8+ chars")
+      .min(8, "Password must be at least 8 chars long")
       .regex(passwordRegex, passwordErrorMessage),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -45,7 +48,7 @@ const loginSchema = z
     identifier: z.string().min(1, "Email or username is required"), // Identifier can be either email or username
     password: z
       .string()
-      .min(8, "Password must be 8+ chars")
+      .min(8, "Password must be at least 8 chars long")
       .regex(passwordRegex, passwordErrorMessage),
   })
   .refine(
@@ -66,10 +69,14 @@ const forgotPasswordSchema = z.object({
 
 // Reset password form schema
 const resetPasswordBaseSchema = z.object({
-  newPassword: z.string().min(8, "Password must be at least 8 characters long"),
+  newPassword: z
+    .string()
+    .min(8, "Password must be at least 8 chars long")
+    .regex(passwordRegex, passwordErrorMessage),
   confirmPassword: z
     .string()
-    .min(8, "Confirm Password must be at least 8 characters long"),
+    .min(8, "Password must be at least 8 chars long")
+    .regex(passwordRegex, passwordErrorMessage),
   token: z.string().min(1, "Token is required"),
 });
 
