@@ -16,8 +16,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function RegisterForm() {
+  const router = useRouter();
+
   const form = useForm<RegisterInputs>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -32,12 +35,13 @@ function RegisterForm() {
   async function onSubmit(values: RegisterInputs) {
     console.log("values", values);
     form.reset();
+    router.push("/verify-email");
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-4 w-80">
+        <div className="space-y-4">
           <div className="flex items-center justify-center gap-2">
             <FormField
               control={form.control}

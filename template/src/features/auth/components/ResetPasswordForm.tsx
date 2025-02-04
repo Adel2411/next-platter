@@ -12,10 +12,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ResetPasswordInputs } from "../types";
+import { ResetPasswordBody, ResetPasswordInputs } from "../types";
 import { resetPasswordSchema } from "../schema";
+import { useSearchParams } from "next/navigation";
 
 function ResetPasswordForm() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
   const form = useForm<ResetPasswordInputs>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
@@ -25,7 +29,16 @@ function ResetPasswordForm() {
   });
 
   async function onSubmit(values: ResetPasswordInputs) {
-    console.log("values", values);
+    const { confirmPassword, ...valuesWithoutConfirmPassword } = values;
+    if (!token) {
+      console.log("Token not found");
+      return;
+    }
+    const body: ResetPasswordBody = {
+      ...valuesWithoutConfirmPassword,
+      token,
+    };
+    console.log("body", body);
     form.reset();
   }
 

@@ -14,8 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { ForgotPasswordInputs } from "../types";
 import { forgotPasswordSchema } from "../schema";
+import { useRouter } from "next/navigation";
 
 function ForgotPasswordForm() {
+  const router = useRouter();
+
   const form = useForm<ForgotPasswordInputs>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -26,6 +29,7 @@ function ForgotPasswordForm() {
   async function onSubmit(values: ForgotPasswordInputs) {
     console.log("values", values);
     form.reset();
+    router.push("/reset-password");
   }
 
   return (
