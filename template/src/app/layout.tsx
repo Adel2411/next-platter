@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,7 +32,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            {children}
+            <div className="relative min-h-screen">
+              <main>{children}</main>
+              <div className="absolute right-4 top-4">
+                <ThemeToggle />
+              </div>
+            </div>
             <Toaster />
           </QueryProvider>
         </ThemeProvider>
