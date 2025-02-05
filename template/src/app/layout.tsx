@@ -32,7 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <div className="relative min-h-screen">
+            <div className="relative min-h-screen flex justify-center">
               <main>{children}</main>
               <div className="absolute right-4 top-4">
                 <ThemeToggle />
