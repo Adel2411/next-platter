@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { LoginInputs } from "../types";
 import { loginSchema } from "../schema";
 import Link from "next/link";
+import OAuthButtons from "./OAuthButtons";
 
 function LoginForm() {
   const form = useForm<LoginInputs>({
@@ -83,6 +84,7 @@ function LoginForm() {
         >
           Login
         </Button>
+        <OAuthButtons />
         <FormDescription>
           Don't have an account?
           <Button variant="link" asChild>

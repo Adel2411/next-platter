@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import OAuthButtons from "./OAuthButtons";
 
 function RegisterForm() {
   const router = useRouter();
@@ -42,7 +43,7 @@ function RegisterForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-4">
+        <div className="space-y-2">
           <div className="flex items-center justify-center gap-2">
             <FormField
               control={form.control}
@@ -141,6 +142,7 @@ function RegisterForm() {
         >
           Register
         </Button>
+        <OAuthButtons />
         <FormDescription>
           Already have an account?
           <Button variant="link" asChild>
