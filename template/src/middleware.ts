@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("accessToken"); // Retrieve the JWT from cookies
+  const token = req.cookies.get("token"); // Retrieve the JWT from cookies
   const { pathname } = req.nextUrl;
 
   // Define public and protected routes

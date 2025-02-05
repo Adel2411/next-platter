@@ -297,4 +297,32 @@ describe("Authentication Routes", () => {
       cy.url().should("include", "/login");
     });
   });
+
+  describe.only("Middleware redirection", () => {
+    describe("Protected Routes", () => {
+      it("should redirect to the home page when visiting the protected route without token in the cookies", () => {
+        // remove the token from the cookies
+        cy.clearCookie("token");
+
+        // Visit the protected route
+        cy.visit(`${baseUrl}/protected`);
+
+        // Assert that the URL includes /
+        cy.url().should("include", "/");
+      });
+    });
+
+    describe("Public Routes", () => {
+      it("should redirect to the protected page when visiting the login page with token in the cookies", () => {
+        // Set the token in the cookies
+        cy.setCookie("token", "abcd123456");
+
+        // Visit the login page
+        cy.visit(`${baseUrl}/login`);
+
+        // Assert that the URL includes /protected
+        cy.url().should("include", "/protected");
+      });
+    });
+  });
 });
