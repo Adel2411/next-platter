@@ -1,35 +1,24 @@
 import * as motion from "motion/react-client";
 import { Button } from "@/components/ui/button";
-import {
-  Code,
-  Database,
-  Layout,
-  CheckCircle,
-  ChevronRight,
-} from "lucide-react";
+import { Code, Database, Layout, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function ProtectedPage() {
   const features = [
     {
-      icon: <Code className="h-6 w-6" />,
+      icon: <Code className="h-4 w-4" />,
       title: "TypeScript Ready",
-      description: "Fully typed for better development experience",
+      description: "Fully typed development experience",
     },
     {
-      icon: <Database className="h-6 w-6" />,
+      icon: <Database className="h-4 w-4" />,
       title: "State Management",
-      description: "Zustand and React Query pre-configured",
+      description: "Zustand and React Query included",
     },
     {
-      icon: <Layout className="h-6 w-6" />,
+      icon: <Layout className="h-4 w-4" />,
       title: "UI Components",
-      description: "Shadcn/ui components for rapid UI development",
-    },
-    {
-      icon: <CheckCircle className="h-6 w-6" />,
-      title: "Testing",
-      description: "Cypress set up for E2E testing",
+      description: "Rapid development with Shadcn/ui",
     },
   ];
 
@@ -57,7 +46,7 @@ export default function ProtectedPage() {
 
   return (
     <div>
-      <main className="mx-auto px-4 py-12 md:px-6 lg:py-16">
+      <main className="mx-auto px-3 py-8 md:px-4 lg:py-12">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -66,16 +55,15 @@ export default function ProtectedPage() {
         >
           <motion.h1
             variants={itemVariants}
-            className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl"
+            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
           >
-            Welcome to the Protected Area
+            Welcome to Protected Area
           </motion.h1>
           <motion.p
             variants={itemVariants}
-            className="mx-auto mb-8 max-w-xl text-lg text-muted-foreground leading-relaxed"
+            className="mx-auto mb-6 max-w-lg text-base text-muted-foreground leading-relaxed"
           >
-            You've successfully authenticated! Explore the powerful features of
-            our starter template.
+            You've successfully authenticated! Explore our features below.
           </motion.p>
         </motion.div>
 
@@ -83,37 +71,36 @@ export default function ProtectedPage() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+          className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3"
         >
           {features.map((feature, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group relative rounded-xl bg-card p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              className="group relative rounded-lg bg-card p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
             >
-              <div className="mb-4 inline-block rounded-lg bg-primary/10 p-3 text-primary ring-2 ring-primary/5 group-hover:bg-primary/15 transition-colors">
+              <div className="mb-3 inline-block rounded-md bg-primary/10 p-2 text-primary ring-1 ring-primary/5 group-hover:bg-primary/15 transition-colors">
                 {feature.icon}
               </div>
-              <h3 className="mb-2 text-xl font-bold">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="mb-1 text-lg font-bold">{feature.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.div variants={itemVariants} className="mt-16 text-center">
-          <Button
-            asChild
-            variant="destructive"
-            size="lg"
-            className="rounded-full px-6 py-4 text-base font-medium"
-          >
-            <Link href="/">
+        <motion.div variants={itemVariants} className="mt-12 text-center">
+          <Link href="/" passHref>
+            <Button
+              variant="destructive"
+              size="default"
+              className="rounded-full px-4 py-2 text-sm font-medium"
+            >
               Logout
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+              <ChevronRight className="ml-1 h-3 w-3" />
+            </Button>
+          </Link>
         </motion.div>
       </main>
     </div>
