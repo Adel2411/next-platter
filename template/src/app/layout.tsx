@@ -5,6 +5,7 @@ import QueryProvider from "@/providers/QueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Footer } from "@/components/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
                 <ThemeToggle />
               </div>
             </div>
+            <Footer />
             <Toaster />
           </QueryProvider>
         </ThemeProvider>
