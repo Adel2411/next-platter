@@ -85,18 +85,31 @@ Before you begin, ensure you have the following installed:
 
 ### Installation
 
-You can create a new project using this template in two ways:
+You can create a new project using this template in three ways:
 
-1. **Using `npx`**:
+1. **Using `npm` globally**:
+
+   - Install the package globally:
+     ```bash
+     npm install -g next-template-init
+     ```
+   - Run the command to create a new project:
+     ```bash
+     next-template-init my-app
+     ```
+
+2. **Using `npx`**:
+
    - Run the following command to create a new project using this template:
-   ```bash
-   npx create-next-template my-app
-   ```
-2. **Using `create-next-app`**:
-   - Alternatively, you can use the `create-next-app` command:
-   ```bash
-   npx create-next-template my-app
-   ```
+     ```bash
+     npx next-template-init my-app
+     ```
+
+3. **Using `create-next-app` with a template**:
+   - Alternatively, you can use the `create-next-app` command with your template:
+     ```bash
+     npx create-next-app@latest --example https://github.com/Adel2411/next-starter-template/tree/main/template my-app
+     ```
 
 ### Running the Project
 

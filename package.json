@@ -1,6 +1,6 @@
 {
   "name": "next-template-init",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A CLI tool to scaffold a Next.js app with a custom template.",
   "type": "module",
   "bin": {
