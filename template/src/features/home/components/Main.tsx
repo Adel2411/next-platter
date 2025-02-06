@@ -2,7 +2,7 @@ import { features } from "../constants";
 import FeatureCard from "./FeatureCard";
 import Hero from "./Hero";
 
-export default function Home() {
+export default function Main() {
   return (
     <div>
       <Hero />
