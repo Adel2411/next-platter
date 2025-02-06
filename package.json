@@ -1,10 +1,10 @@
 {
-  "name": "create-next-template",
+  "name": "next-template-init",
   "version": "1.0.0",
   "description": "A CLI tool to scaffold a Next.js app with a custom template.",
   "type": "module",
   "bin": {
-    "create-next-template": "./bin/create-template.js"
+    "next-template-init": "./bin/create-template.js"
   },
   "scripts": {
     "dev": "next dev"
@@ -12,7 +12,8 @@
   "keywords": [
     "nextjs",
     "template",
-    "starter"
+    "starter",
+    "kit"
   ],
   "author": "adel2411",
   "license": "MIT",

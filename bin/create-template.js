@@ -73,6 +73,11 @@ copyFiles(templateDir, projectDir);
 // Stop spinner and log success
 spinner.succeed(chalk(`Project "${projectName}" created successfully!`));
 
+// Inform the user that the installation might take a while
+console.log(
+  chalk.yellow("This might take a few minutes. Please be patient..."),
+);
+
 // Start spinner for dependency installation
 const installSpinner = ora(chalk.blue("Installing dependencies...")).start();
 
