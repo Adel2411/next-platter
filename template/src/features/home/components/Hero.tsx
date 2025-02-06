@@ -6,11 +6,12 @@ function Hero() {
   return (
     <div className="text-center">
       <h1 className="mb-4 text-2xl font-bold sm:text-3xl md:text-4xl">
-        Build Faster with Next.js
+        Front Starter Template
       </h1>
       <p className="mx-auto mb-6 max-w-lg text-muted-foreground">
-        Launch your next project with my production-ready template, engineered
-        for scalability and developer happiness.
+        A production-ready template for scalable, modular apps. Packed with
+        features like authentication, state management, and a rich ecosystem of
+        tools for modern development.
       </p>
       <div>
         <Link href="/login" passHref>
