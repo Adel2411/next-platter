@@ -1,71 +1,80 @@
-# Next.js Starter Template 🚀
+# Next.js Starter Template
 
 Welcome to the **Next.js Starter Template**! This is a highly scalable, production-ready template designed to kickstart your Next.js projects with best practices, modern tools, and a well-organized architecture. Whether you're building a small app or a large-scale project, this template has you covered.
 
 ---
 
-## Features ✨
+## Features
 
-This template comes packed with the following features:
+### Core Architecture
 
-- **Next.js 15**: Built with the latest Next.js features, including the App Router.
-- **Feature-Folder Architecture**: Organized by feature for better scalability and maintainability.
-- **Tailwind CSS**: Utility-first CSS framework for rapid styling.
-- **Zustand**: Lightweight state management for global state.
-- **React Query**: Advanced client-side data fetching with caching and retries.
-- **shadcn/ui**: Pre-built, accessible, and customizable UI components.
-- **Zod**: Schema validation for forms and API responses.
-- **Cypress & Jest**: End-to-end and unit testing for robust applications.
-- **ESLint & Prettier**: Code linting and formatting for consistent code quality.
-- **Framer Motion**: Smooth animations for UI elements.
-- **Docker**: Containerization for consistent development and deployment.
-- **Senior-Level Error Handling**: Global error boundary and centralized error handling.
-- **Next.js Caching**: Built-in caching for server-side data fetching.
+- **Feature-Folder Structure**: Modular and maintainable code organization. Each feature (e.g., authentication, dashboard) encapsulates its own components, services, hooks, and state management.
+- **Lightning Fast Performance**: Optimized with Next.js 15 and React 19 for server-side rendering (SSR) and static site generation (SSG).
+- **Enterprise-Grade Security**: Built-in authentication, authorization, and middleware for secure routing.
+
+### Libraries & Tools
+
+- **Zod**: Data validation for robust and type-safe forms.
+- **React Hook Form**: Efficient form management with seamless Zod integration.
+- **Zustand**: Lightweight and scalable state management.
+- **React Query**: Asynchronous state management for API calls and data fetching.
+- **Shadcn/ui**: Beautiful, customizable, and accessible UI components.
+- **Framer Motion**: Smooth and interactive animations for enhanced user experience.
+- **Cypress**: End-to-end (E2E) testing for reliable and bug-free deployments.
+- **Docker**: Containerization for easy deployment across environments.
 
 ---
 
-## Architecture 🏗️
+## Architecture
 
 The template follows a **feature-folder architecture** to keep your codebase organized and scalable. Here's an overview of the folder structure:
 
 ```text
 my-nextjs-starter/
-├── public/ # Static assets (images, fonts, etc.)
+├── public/ # Static assets (logos, icons, images)
 ├── src/
-│ ├── app/ # App Router (Next.js 13+)
-│ │ ├── (auth)/ # Auth-related routes
-│ │ ├── (main)/ # Main app routes
+│ ├── app/ # Next.js App Router (Next.js 13+)
+│ │ ├── (auth)/ # Authentication-related routes
+│ │ │ ├── login/ # Login page
+│ │ │ ├── register/ # Registration page
+│ │ │ ├── forgot-password/ # Forgot password page
+│ │ │ ├── reset-password/ # Reset password page
+│ │ │ └── verify-email/ # Email verification page
+│ │ ├── protected/ # Example protected route
 │ │ ├── layout.tsx # Root layout
-│ │ └── page.tsx # Home page
+│ │ ├── page.tsx # Home page
+│ │ ├── not-found.tsx # 404 page
+│ ├── components/ # Reusable UI components
+│ │ ├── ThemeToggle.tsx # Theme switcher
+│ │ ├── FeatureCard.tsx # Card for feature highlights
+│ │ └── ui/ # Common UI components (buttons, inputs, etc.)
 │ ├── features/ # Feature-based modules
-│ │ ├── auth/ # Authentication feature
-│ │ ├── dashboard/ # Dashboard feature
-│ │ └── ... # Other features
-│ ├── lib/ # Shared utilities and helpers
-│ ├── hooks/ # Shared custom React hooks
-│ ├── components/ # Shared UI components
-│ ├── styles/ # Global styles or CSS modules
-│ ├── types/ # TypeScript types/interfaces
-│ ├── constants/ # App-wide constants
-│ ├── config/ # Configuration files (e.g., API config)
-│ └── providers/ # Provider wrappers (e.g., React Query, Zustand)
-├── cypress/ # Cypress end-to-end tests
-├── tests/ # Jest unit tests
-├── .env.local # Environment variables
-├── .eslintrc.js # ESLint configuration
-├── .prettierrc.js # Prettier configuration
-├── tailwind.config.js # Tailwind CSS configuration
-├── tsconfig.json # TypeScript configuration
-├── next.config.js # Next.js configuration
+│ │ ├── auth/ # Authentication logic
+│ │ │ ├── components/ # Auth-related UI components (forms, buttons)
+│ │ │ ├── api/ # API functions for authentication
+│ │ │ ├── schema/ # Validation schemas (e.g., Zod)
+│ │ │ └── types/ # TypeScript types for auth
+│ │ ├── home/ # Home page-specific components
+│ │ └── protected/ # Protected page-specific components
+│ ├── hooks/ # Custom React hooks
+│ ├── lib/ # Utilities (API calls, error handling, helpers)
+│ ├── providers/ # Context providers (e.g., React Query, Theme)
+│ ├── stores/ # Zustand store for state management
+│ ├── types/ # Global TypeScript types
+│ ├── middleware.ts # Next.js middleware (for auth, redirects)
+├── cypress/ # Cypress end-to-end testing setup
 ├── Dockerfile # Docker configuration
-├── docker-compose.yml # Docker Compose configuration
-├── .dockerignore # Files to ignore in Docker build
+├── docker-compose.yml # Docker Compose setup
+├── next.config.ts # Next.js configuration
+├── tailwind.config.ts # Tailwind CSS configuration
+├── tsconfig.json # TypeScript configuration
+├── .env.local # Environment variables (not included in repo)
 └── package.json # Dependencies and scripts
 ```
 
 ---
 
-## Getting Started 🛠️
+## Getting Started
 
 ### Prerequisites
 
@@ -103,15 +112,28 @@ You can create a new project using this template in two ways:
 
 ---
 
-## Configuration ⚙️
+## Configuration
 
 ### Environment Variables
 
-Create a `.env.local` file in the root of your project and add the following variables:
+1. Copy the `.env.example` file to `.env.local` in the root of your project:
 
-```plaintext
-NEXT_PUBLIC_API_URL=http://localhost:3000/api
-```
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Update the content of `.env.local` with your related environment variables:
+
+   ```plaintext
+   # URL for the public API
+   NEXT_PUBLIC_API_URL=http://localhost:8080
+
+   # Local development URL
+   LOCAL_URL=http://localhost:8080
+
+   # Host URL for the application
+   HOST_URL=http://localhost:8080
+   ```
 
 ### Tailwind CSS
 
@@ -123,23 +145,22 @@ ESLint and Prettier are configured for consistent code quality. You can modify t
 
 ---
 
-## Testing 🧪
+## Testing
 
-This template comes with **Cypress** for end-to-end testing and **Jest** for unit testing.
+This template comes with **Cypress** for end-to-end.
 
 ### Running Tests
 
-- Unit Tests:
+1. Run the server:
 
-```bash
-npm test
-```
+   ```bash
+   npm run dev
+   ```
 
-- End-to-End Tests:
-
-```bash
-npm run cypress
-```
+2. End-to-End Tests:
+   ```bash
+   npm run cypress:open
+   ```
 
 ---
 
@@ -147,13 +168,15 @@ npm run cypress
 
 This template includes a `Dockerfile` and `docker-compose.yml` for containerization. You can build and run the Docker image using the following commands:
 
-### Building the Docker Image
+### Using Docker
+
+#### Building the Docker Image
 
 ```bash
 docker build -t my-app .
 ```
 
-### Running the Docker Container
+#### Running the Docker Container
 
 ```bash
 docker run -p 3000:3000 my-app
