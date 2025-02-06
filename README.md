@@ -91,18 +91,18 @@ You can create a new project using this template in three ways:
 
    - Install the package globally:
      ```bash
-     npm install -g next-template-init
+     npm install -g next-platter
      ```
    - Run the command to create a new project:
      ```bash
-     next-template-init my-app
+     next-platter my-app
      ```
 
 2. **Using `npx`**:
 
    - Run the following command to create a new project using this template:
      ```bash
-     npx next-template-init my-app
+     npx next-platter my-app
      ```
 
 3. **Using `create-next-app` with a template**:
@@ -203,6 +203,6 @@ docker-compose up
 
 ---
 
-## Contributing 🤝
+## Contributing
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.

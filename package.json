@@ -1,10 +1,10 @@
 {
-  "name": "next-template-init",
+  "name": "next-platter",
   "version": "0.1.0",
-  "description": "A CLI tool to scaffold a Next.js app with a custom template.",
+  "description": "A powerful CLI tool to quickly scaffold a Next.js application with a custom template, streamlining your development workflow.",
   "type": "module",
   "bin": {
-    "next-template-init": "./bin/create-template.js"
+    "next-platter": "./bin/next-platter.js"
   },
   "scripts": {
     "dev": "next dev"
