@@ -9,7 +9,7 @@ import { Feature } from "@/types";
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
     <div key={feature.id}>
-      <Card>
+      <Card className="hover:shadow-md transition-all">
         <CardHeader className="space-y-4">
           <CardTitle>{feature.title}</CardTitle>
           <CardDescription>{feature.description}</CardDescription>
