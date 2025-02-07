@@ -17,8 +17,11 @@ import { LoginInputs } from "../types";
 import { loginSchema } from "../schema";
 import Link from "next/link";
 import OAuthButtons from "./OAuthButtons";
+import { useLoadingStore } from "@/stores/loading";
 
 function LoginForm() {
+  const { isLoading, setLoading } = useLoadingStore();
+
   const form = useForm<LoginInputs>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,8 +31,16 @@ function LoginForm() {
   });
 
   async function onSubmit(values: LoginInputs) {
+    setLoading(true);
+
+    // Simulate a network request
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     console.log(values);
+
+    // On success
     form.reset();
+
+    setLoading(false);
   }
 
   return (
@@ -44,7 +55,7 @@ function LoginForm() {
                 <FormLabel>Identifier</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     placeholder="username or email..."
                     {...field}
                   />
@@ -61,7 +72,7 @@ function LoginForm() {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="password"
                     placeholder="password..."
                     {...field}
@@ -77,11 +88,7 @@ function LoginForm() {
             </Button>
           </FormDescription>
         </div>
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={form.formState.isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isLoading}>
           Login
         </Button>
         <OAuthButtons />

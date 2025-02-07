@@ -1,13 +1,16 @@
 import Divider from "@/components/Divider";
 import { Button } from "@/components/ui/button";
+import { useLoadingStore } from "@/stores/loading";
 
 function OAuthButtons() {
+  const { isLoading } = useLoadingStore();
+
   return (
     <>
       <Divider content="OR" />
 
       <div className="w-full flex flex-col items-center gap-2">
-        <Button className="w-full">
+        <Button className="w-full" disabled={isLoading}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -24,7 +27,7 @@ function OAuthButtons() {
           Sign in with Google
         </Button>
 
-        <Button className="w-full">
+        <Button className="w-full" disabled={isLoading}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -39,7 +42,7 @@ function OAuthButtons() {
           Sign in with Facebook
         </Button>
 
-        <Button className="w-full">
+        <Button className="w-full" disabled={isLoading}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

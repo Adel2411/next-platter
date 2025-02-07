@@ -15,8 +15,11 @@ import { Input } from "@/components/ui/input";
 import { ResetPasswordBody, ResetPasswordInputs } from "../types";
 import { resetPasswordSchema } from "../schema";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useLoadingStore } from "@/stores/loading";
 
 function ResetPasswordForm() {
+  const { isLoading, setLoading } = useLoadingStore();
+
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -37,13 +40,22 @@ function ResetPasswordForm() {
       form.reset();
       return;
     }
+
+    setLoading(true);
     const body: ResetPasswordBody = {
       ...valuesWithoutConfirmPassword,
       token,
     };
+
+    // Simulate a network request
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     console.log(body);
+
+    // On success
     form.reset();
     router.push("/login");
+
+    setLoading(false);
   }
 
   return (
@@ -58,7 +70,7 @@ function ResetPasswordForm() {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="password"
                     placeholder="password..."
                     {...field}
@@ -76,7 +88,7 @@ function ResetPasswordForm() {
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="password"
                     placeholder="confirm password..."
                     {...field}
@@ -87,11 +99,7 @@ function ResetPasswordForm() {
             )}
           />
         </div>
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={form.formState.isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isLoading}>
           Change Password
         </Button>
       </form>

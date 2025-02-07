@@ -15,8 +15,11 @@ import { Input } from "@/components/ui/input";
 import { ForgotPasswordInputs } from "../types";
 import { forgotPasswordSchema } from "../schema";
 import { useRouter } from "next/navigation";
+import { useLoadingStore } from "@/stores/loading";
 
 function ForgotPasswordForm() {
+  const { isLoading, setLoading } = useLoadingStore();
+
   const router = useRouter();
 
   const form = useForm<ForgotPasswordInputs>({
@@ -27,9 +30,17 @@ function ForgotPasswordForm() {
   });
 
   async function onSubmit(values: ForgotPasswordInputs) {
+    setLoading(true);
+
+    // Simulate a network request
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     console.log(values);
+
+    // On success
     form.reset();
     router.push("/reset-password");
+
+    setLoading(false);
   }
 
   return (
@@ -44,7 +55,7 @@ function ForgotPasswordForm() {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="email"
                     placeholder="email..."
                     {...field}
@@ -55,11 +66,7 @@ function ForgotPasswordForm() {
             )}
           />
         </div>
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={form.formState.isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isLoading}>
           Send Reset Password Email
         </Button>
       </form>

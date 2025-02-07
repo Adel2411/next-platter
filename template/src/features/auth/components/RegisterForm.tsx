@@ -1,6 +1,6 @@
 "use client";
 
-import { RegisterBody, RegisterInputs } from "../types";
+import { RegisterInputs } from "../types";
 import { registerSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,8 +18,11 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import OAuthButtons from "./OAuthButtons";
+import { useLoadingStore } from "@/stores/loading";
 
 function RegisterForm() {
+  const { isLoading, setLoading } = useLoadingStore();
+
   const router = useRouter();
 
   const form = useForm<RegisterInputs>({
@@ -35,9 +38,17 @@ function RegisterForm() {
 
   async function onSubmit(values: RegisterInputs) {
     const { confirmPassword, ...body } = values;
+    setLoading(true);
+
+    // Simulate a network request
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     console.log(body);
+
+    // On success
     form.reset();
     router.push("/verify-email");
+
+    setLoading(false);
   }
 
   return (
@@ -53,7 +64,7 @@ function RegisterForm() {
                   <FormLabel>Full name</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={form.formState.isSubmitting}
+                      disabled={isLoading}
                       placeholder="full name..."
                       {...field}
                     />
@@ -70,7 +81,7 @@ function RegisterForm() {
                   <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={form.formState.isSubmitting}
+                      disabled={isLoading}
                       placeholder="username..."
                       {...field}
                     />
@@ -88,7 +99,7 @@ function RegisterForm() {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="email"
                     placeholder="email..."
                     {...field}
@@ -106,7 +117,7 @@ function RegisterForm() {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="password"
                     placeholder="password..."
                     {...field}
@@ -124,7 +135,7 @@ function RegisterForm() {
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={form.formState.isSubmitting}
+                    disabled={isLoading}
                     type="password"
                     placeholder="confirm password..."
                     {...field}
@@ -135,11 +146,7 @@ function RegisterForm() {
             )}
           />
         </div>
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={form.formState.isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isLoading}>
           Register
         </Button>
         <OAuthButtons />

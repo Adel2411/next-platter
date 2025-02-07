@@ -21,8 +21,11 @@ import {
 import { VerifyEmailInputs } from "../types";
 import { verifyEmailSchema } from "../schema";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import { useLoadingStore } from "@/stores/loading";
 
 function VerifyEmailForm() {
+  const { isLoading, setLoading } = useLoadingStore();
+
   const form = useForm<VerifyEmailInputs>({
     resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
@@ -31,8 +34,16 @@ function VerifyEmailForm() {
   });
 
   async function onSubmit(values: VerifyEmailInputs) {
+    setLoading(true);
+
+    // Simulate a network request
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     console.log(values);
+
+    // On success
     form.reset();
+
+    setLoading(false);
   }
 
   return (
@@ -45,7 +56,12 @@ function VerifyEmailForm() {
             <FormItem className="flex flex-col items-center">
               <FormLabel>One-Time Code</FormLabel>
               <FormControl>
-                <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS} {...field}>
+                <InputOTP
+                  maxLength={6}
+                  pattern={REGEXP_ONLY_DIGITS}
+                  disabled={isLoading}
+                  {...field}
+                >
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
@@ -66,11 +82,7 @@ function VerifyEmailForm() {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={form.formState.isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isLoading}>
           Verify Email
         </Button>
       </form>
