@@ -152,10 +152,6 @@ You can create a new project using this template in three ways:
 
 Tailwind CSS is pre-configured in this template. You can customize it by editing the `tailwind.config.js` file.
 
-### ESLint & Prettier
-
-ESLint and Prettier are configured for consistent code quality. You can modify the rules in `.eslintrc.js` and `.prettierrc.js`.
-
 ---
 
 ## Testing
