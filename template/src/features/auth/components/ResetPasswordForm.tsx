@@ -48,7 +48,7 @@ function ResetPasswordForm() {
     };
 
     // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     console.log(body);
 
     // On success

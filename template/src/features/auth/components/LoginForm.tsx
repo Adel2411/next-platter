@@ -18,9 +18,13 @@ import { loginSchema } from "../schema";
 import Link from "next/link";
 import OAuthButtons from "./OAuthButtons";
 import { useLoadingStore } from "@/stores/loading";
+import { setToken } from "../api";
+import { showSuccessToast } from "@/lib/toastHandler";
+import { useRouter } from "next/navigation";
 
 function LoginForm() {
   const { isLoading, setLoading } = useLoadingStore();
+  const router = useRouter();
 
   const form = useForm<LoginInputs>({
     resolver: zodResolver(loginSchema),
@@ -34,11 +38,14 @@ function LoginForm() {
     setLoading(true);
 
     // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 10000));
-    console.log(values);
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
+    // console.log(values);
+    await setToken();
 
     // On success
     form.reset();
+    showSuccessToast("Login successful");
+    router.push("/protected");
 
     setLoading(false);
   }

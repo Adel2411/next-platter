@@ -1,3 +1,5 @@
+"use server";
+
 import fetchInstance from "@/lib/api";
 import {
   ForgotPasswordBody,
@@ -9,7 +11,18 @@ import {
   VerifyEmailBody,
   VerifyEmailResponse,
 } from "../types";
+import { cookies } from "next/headers";
 
+// Mock functions
+export const setToken = async () => {
+  (await cookies()).set("token", "abcd1234");
+};
+
+export const deleteToken = async () => {
+  (await cookies()).delete("token");
+};
+
+// Real functions
 export const register = async (
   body: RegisterBody,
 ): Promise<RegisterResponse> => {

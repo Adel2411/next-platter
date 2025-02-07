@@ -22,9 +22,13 @@ import { VerifyEmailInputs } from "../types";
 import { verifyEmailSchema } from "../schema";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useLoadingStore } from "@/stores/loading";
+import { useRouter } from "next/navigation";
+import { showSuccessToast } from "@/lib/toastHandler";
+import { setToken } from "../api";
 
 function VerifyEmailForm() {
   const { isLoading, setLoading } = useLoadingStore();
+  const router = useRouter();
 
   const form = useForm<VerifyEmailInputs>({
     resolver: zodResolver(verifyEmailSchema),
@@ -37,11 +41,14 @@ function VerifyEmailForm() {
     setLoading(true);
 
     // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 10000));
-    console.log(values);
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
+    // console.log(values);
+    await setToken();
 
     // On success
     form.reset();
+    showSuccessToast("Registration successful");
+    router.push("/protected");
 
     setLoading(false);
   }
