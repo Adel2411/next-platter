@@ -1,13 +1,14 @@
 {
   "name": "next-platter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A powerful CLI tool to quickly scaffold a Next.js application with a custom template, streamlining your development workflow.",
   "type": "module",
   "bin": {
     "next-platter": "./bin/next-platter.js"
   },
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "release": "standard-version"
   },
   "keywords": [
     "nextjs",
@@ -22,5 +23,8 @@
     "chalk": "^5.4.1",
     "inquirer": "^12.3.3",
     "ora": "^8.1.1"
+  },
+  "devDependencies": {
+    "standard-version": "^9.5.0"
   }
 }
