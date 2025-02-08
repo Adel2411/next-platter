@@ -42,7 +42,7 @@ function VerifyEmailForm() {
 
     // Simulate a network request
     // await new Promise((resolve) => setTimeout(resolve, 5000));
-    // console.log(values);
+    console.log(values);
     await setToken();
 
     // On success

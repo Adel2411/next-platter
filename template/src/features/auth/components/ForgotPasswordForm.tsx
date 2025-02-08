@@ -33,7 +33,7 @@ function ForgotPasswordForm() {
     setLoading(true);
 
     // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(values);
 
     // On success
