@@ -38,7 +38,7 @@ fs.mkdirSync(projectDir, { recursive: true });
 // Function to copy files while excluding specific files/directories
 const copyFiles = (source, destination) => {
   const files = fs.readdirSync(source);
-  const exclude = ["node_modules", "package-lock.json"]; // Add any other files/dirs to exclude
+  const exclude = ["node_modules", "package-lock.json", ".next"];
 
   for (const file of files) {
     if (exclude.includes(file)) {
@@ -63,7 +63,14 @@ const spinner = ora(chalk.blue(`Creating project "${projectName}"...`)).start();
 // Handle Ctrl+C to stop the process
 process.on("SIGINT", () => {
   console.log(chalk.red("\nProcess interrupted. Cleaning up..."));
-  spinner.fail("Process interrupted.");
+  if (installProcess) {
+    installProcess.kill("SIGINT");
+  }
+  if (installSpinner) {
+    installSpinner.fail("Process interrupted.");
+  } else {
+    spinner.fail("Process interrupted.");
+  }
   process.exit(1);
 });
 
@@ -73,26 +80,114 @@ copyFiles(templateDir, projectDir);
 // Stop spinner and log success
 spinner.succeed(chalk(`Project "${projectName}" created successfully!`));
 
-// Inform the user that the installation might take a while
-console.log(
-  chalk.yellow("This might take a few minutes. Please be patient..."),
-);
+// Start spinner for git initialization
+const gitSpinner = ora(chalk.blue("Initializing git repository...")).start();
 
-// Start spinner for dependency installation
-const installSpinner = ora(chalk.blue("Installing dependencies...")).start();
-
-// Install dependencies
+// Initialize git repository
 try {
   process.chdir(projectDir);
-  const installProcess = spawn("npm", ["install"], { stdio: "inherit" });
+  const gitInitProcess = spawn("git", ["init"]);
 
-  installProcess.on("close", (code) => {
+  gitInitProcess.stdout.on("data", (data) => {
+    // Suppress git init output
+  });
+
+  gitInitProcess.stderr.on("data", (data) => {
+    // Suppress git init error output
+  });
+
+  gitInitProcess.on("close", (code) => {
     if (code === 0) {
-      installSpinner.succeed(chalk("Dependencies installed successfully!"));
+      gitSpinner.succeed(chalk("Git repository initialized successfully!"));
 
-      // Done! Show a beautiful boxed message
-      const successMessage = boxen(
-        chalk(`
+      // Inform the user that the installation might take a while
+      console.log(
+        chalk.yellow("This might take a few minutes. Please be patient..."),
+      );
+
+      // Start spinner for dependency installation
+      installDependencies();
+    } else {
+      gitSpinner.fail(chalk.red("Failed to initialize git repository."));
+      installDependencies(); // Continue to install dependencies even if git init fails
+    }
+  });
+} catch (error) {
+  gitSpinner.fail(chalk.red("Failed to initialize git repository."));
+  console.error(chalk.red(error.message));
+  installDependencies(); // Continue to install dependencies even if git init fails
+}
+
+let installProcess;
+let installSpinner;
+
+function installDependencies() {
+  installSpinner = ora(chalk.blue("Installing dependencies...")).start();
+
+  // Install dependencies
+  try {
+    installProcess = spawn("npm", ["install"], { stdio: "inherit" });
+
+    installProcess.on("close", (code) => {
+      if (code === 0) {
+        installSpinner.succeed(chalk("Dependencies installed successfully!"));
+
+        // Create initial commit
+        createInitialCommit();
+      } else {
+        installSpinner.fail(chalk.red("Failed to install dependencies."));
+        process.exit(1);
+      }
+    });
+  } catch (error) {
+    installSpinner.fail(chalk.red("Failed to install dependencies."));
+    console.error(chalk.red(error.message));
+    process.exit(1);
+  }
+}
+
+function createInitialCommit() {
+  const commitSpinner = ora(chalk.blue("Creating initial commit...")).start();
+
+  try {
+    const gitAddProcess = spawn("git", ["add", "."]);
+
+    gitAddProcess.on("close", (code) => {
+      if (code === 0) {
+        const gitCommitProcess = spawn("git", [
+          "commit",
+          "-m",
+          "initial commit",
+        ]);
+
+        gitCommitProcess.on("close", (code) => {
+          if (code === 0) {
+            commitSpinner.succeed(
+              chalk("Initial commit created successfully!"),
+            );
+          } else {
+            commitSpinner.fail(chalk.red("Failed to create initial commit."));
+          }
+          showCompletionMessage(); // Show completion message regardless of commit success
+        });
+      } else {
+        commitSpinner.fail(
+          chalk.red("Failed to stage files for initial commit."),
+        );
+        showCompletionMessage(); // Show completion message regardless of staging success
+      }
+    });
+  } catch (error) {
+    commitSpinner.fail(chalk.red("Failed to create initial commit."));
+    console.error(chalk.red(error.message));
+    showCompletionMessage(); // Show completion message regardless of error
+  }
+}
+
+function showCompletionMessage() {
+  // Done! Show a beautiful boxed message
+  const successMessage = boxen(
+    chalk(`
 Done! Your project is ready.
 
 Run the following commands to start:
@@ -100,21 +195,12 @@ Run the following commands to start:
   ${chalk.cyan(`cd ${projectName}`)}
   ${chalk.cyan("npm run dev")}
 `),
-        {
-          padding: 0.5,
-          margin: 1,
-          borderStyle: "round",
-        },
-      );
+    {
+      padding: 0.5,
+      margin: 1,
+      borderStyle: "round",
+    },
+  );
 
-      console.log(successMessage);
-    } else {
-      installSpinner.fail(chalk.red("Failed to install dependencies."));
-      process.exit(1);
-    }
-  });
-} catch (error) {
-  installSpinner.fail(chalk.red("Failed to install dependencies."));
-  console.error(chalk.red(error.message));
-  process.exit(1);
+  console.log(successMessage);
 }
