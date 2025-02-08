@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.1](https://github.com/Adel2411/next-starter-template/compare/v0.3.0...v0.3.1) (2025-02-08)
+
+### Fixed
+
+- Solved the install dependencies message glitching.
+- Removed initial commit creation step.
+
 ## [0.3.0](https://github.com/Adel2411/next-starter-template/compare/v0.3.1...v0.3.0) (2025-02-08)
 
 ## [0.3.0] - 2023-02-08

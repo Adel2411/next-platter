@@ -124,16 +124,21 @@ let installSpinner;
 function installDependencies() {
   installSpinner = ora(chalk.blue("Installing dependencies...")).start();
 
-  // Install dependencies
   try {
-    installProcess = spawn("npm", ["install"], { stdio: "inherit" });
+    installProcess = spawn("npm", ["install"]);
+
+    installProcess.stdout.on("data", (data) => {
+      installSpinner.text = chalk.blue(`Installing dependencies...\n${data}`);
+    });
+
+    installProcess.stderr.on("data", (data) => {
+      installSpinner.text = chalk.blue(`Installing dependencies...\n${data}`);
+    });
 
     installProcess.on("close", (code) => {
       if (code === 0) {
         installSpinner.succeed(chalk("Dependencies installed successfully!"));
-
-        // Create initial commit
-        createInitialCommit();
+        showCompletionMessage();
       } else {
         installSpinner.fail(chalk.red("Failed to install dependencies."));
         process.exit(1);
@@ -143,44 +148,6 @@ function installDependencies() {
     installSpinner.fail(chalk.red("Failed to install dependencies."));
     console.error(chalk.red(error.message));
     process.exit(1);
-  }
-}
-
-function createInitialCommit() {
-  const commitSpinner = ora(chalk.blue("Creating initial commit...")).start();
-
-  try {
-    const gitAddProcess = spawn("git", ["add", "."]);
-
-    gitAddProcess.on("close", (code) => {
-      if (code === 0) {
-        const gitCommitProcess = spawn("git", [
-          "commit",
-          "-m",
-          "initial commit",
-        ]);
-
-        gitCommitProcess.on("close", (code) => {
-          if (code === 0) {
-            commitSpinner.succeed(
-              chalk("Initial commit created successfully!"),
-            );
-          } else {
-            commitSpinner.fail(chalk.red("Failed to create initial commit."));
-          }
-          showCompletionMessage(); // Show completion message regardless of commit success
-        });
-      } else {
-        commitSpinner.fail(
-          chalk.red("Failed to stage files for initial commit."),
-        );
-        showCompletionMessage(); // Show completion message regardless of staging success
-      }
-    });
-  } catch (error) {
-    commitSpinner.fail(chalk.red("Failed to create initial commit."));
-    console.error(chalk.red(error.message));
-    showCompletionMessage(); // Show completion message regardless of error
   }
 }
 
