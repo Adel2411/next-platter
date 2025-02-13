@@ -30,3 +30,16 @@ All notable changes to this project will be documented in this file. See [standa
 - Solved Cypress errors.
 - Don't copy ".next" before the `npm i` command.
 - Solved the kill process bug.
+
+## [0.4.0](https://github.com/Adel2411/next-starter-template/compare/v0.3.2...v0.4.0) (2025-02-13)
+
+### Added
+
+- Add success color (green) and apply it to success toasts.
+- Add some animations.
+
+### Changed
+
+- Change current success toast to neutral toast.
+- Change Cypress test structure to make it more readable and beautiful.
+- Change landing and protect page title to fit the current template (mention next-platter too).
