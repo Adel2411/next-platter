@@ -10,8 +10,16 @@ export function showErrorToast(message: string): void {
 
 export function showSuccessToast(message: string): void {
   toast({
-    variant: "default",
+    variant: "success",
     title: "Success",
+    description: message,
+  });
+}
+
+export function showNeutralToast(message: string): void {
+  toast({
+    variant: "default",
+    title: "Neutral",
     description: message,
   });
 }

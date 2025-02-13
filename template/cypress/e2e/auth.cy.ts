@@ -1,5 +1,5 @@
 describe("Authentication Routes", () => {
-  const baseUrl = "http://localhost:3000"; // Replace with your application's base URL
+  const baseUrl = "http://localhost:3000";
 
   context("Loading Pages", () => {
     const pages = [
