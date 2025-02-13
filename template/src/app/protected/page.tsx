@@ -7,6 +7,9 @@ import { deleteToken } from "@/features/auth/api";
 import { showSuccessToast } from "@/lib/toastHandler";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { LetterPullUp } from "@/components/StaggeredLetterPullUp";
+import { BlurIn } from "@/components/BlurIn";
 
 export default function ProtectedPage() {
   const router = useRouter();
@@ -19,31 +22,58 @@ export default function ProtectedPage() {
     router.push("/");
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="flex justify-center pt-20 max-w-screen-lg">
       <div>
         <div className="text-center">
-          <h1 className="mb-4 text-2xl font-bold sm:text-3xl md:text-4xl">
-            Protected Route
-          </h1>
-          <p className="mx-auto mb-6 max-w-lg text-muted-foreground">
+          <LetterPullUp words="next-platter Protected Route" />
+          <BlurIn
+            text="
             You've successfully accessed a secure route. Start building your
             protected features here.
-          </p>
-          <div>
+"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Button variant="destructive" onClick={handleLogOut}>
               Logout
               <LogOut className="h-3 w-3" />
             </Button>
-          </div>
+          </motion.div>
         </div>
-        <div className="px-4 py-32 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="px-4 py-32 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {features.map((feature) => (
-            <div key={feature.id}>
+            <motion.div key={feature.id} variants={itemVariants}>
               <FeatureCard feature={feature} />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

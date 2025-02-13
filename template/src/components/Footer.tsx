@@ -25,7 +25,7 @@ export function Footer() {
           </Link>
           <Link
             href="https://linkedin.com/in/adel-hadj-arab-68139925a"
-            className="text-muted-foreground hover:text-primary"
+            className="text-muted-foreground hover:text-blue-500"
           >
             <span className="sr-only">LinkedIn</span>
             <Linkedin className="h-6 w-6" />
