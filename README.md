@@ -67,7 +67,7 @@ You can create a new project using this template in three ways:
    ```
 5. Start the development server:
    ```bash
-   cd my-app
+   npm run dev
    ```
 6. Open [http://localhost:3000](http://localhost:3000) in your browser to see the app.
 
