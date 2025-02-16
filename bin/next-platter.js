@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "fs";
 import path from "path";
-import { spawn } from "child_process";
+import { spawn } from "cross-spawn"; // Use cross-spawn for multi-platform support
 import { fileURLToPath } from "url";
 import chalk from "chalk";
 import ora from "ora";
@@ -85,8 +85,7 @@ const gitSpinner = ora(chalk.blue("Initializing git repository...")).start();
 
 // Initialize git repository
 try {
-  process.chdir(projectDir);
-  const gitInitProcess = spawn("git", ["init"]);
+  const gitInitProcess = spawn("git", ["init"], { cwd: projectDir });
 
   gitInitProcess.stdout.on("data", (data) => {
     // Suppress git init output
@@ -125,14 +124,22 @@ function installDependencies() {
   installSpinner = ora(chalk.blue("Installing dependencies...")).start();
 
   try {
-    installProcess = spawn("npm", ["install"]);
+    // Use cross-spawn to handle platform-specific issues
+    installProcess = spawn("npm", ["install"], { cwd: projectDir });
 
+    // Capture stdout and stderr
     installProcess.stdout.on("data", (data) => {
-      installSpinner.text = chalk.blue(`Installing dependencies...\n${data}`);
+      // Append the output to the spinner text
+      installSpinner.text = chalk.blue(
+        `Installing dependencies...\n${data.toString().trim()}`,
+      );
     });
 
     installProcess.stderr.on("data", (data) => {
-      installSpinner.text = chalk.blue(`Installing dependencies...\n${data}`);
+      // Append the error output to the spinner text
+      installSpinner.text = chalk.blue(
+        `Installing dependencies...\n${data.toString().trim()}`,
+      );
     });
 
     installProcess.on("close", (code) => {
