@@ -2,30 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.4.1](https://github.com/Adel2411/next-starter-template/compare/v0.4.0...v0.4.1) (2025-02-15)
-
-## [0.4.1](https://github.com/Adel2411/next-starter-template/compare/v0.4.0...v0.4.1) (2025-02-15)
+### [0.5.0](https://github.com/Adel2411/next-starter-template/compare/v0.4.1...v0.5.0) (2025-02-16)
 
 ### Added
 
-- Add Logo of the CLI Tool
+- Added **cross-platform support** using `cross-spawn` for seamless compatibility across Windows, macOS, and Linux.
+- Improved **dependency installation** by displaying `npm install` output in real-time for better visibility.
 
 ### Changed
 
-- Update README.md file and GitHub repo description
+- Added **`cwd` option** to `spawn` calls to avoid changing the working directory with `process.chdir`.
+- Simplified code and removed redundant logic for better maintainability.
+
+### Fixed
+
+- Fixed `npm install` issues on Windows by automatically resolving `.cmd` files with `cross-spawn`.
+- Enhanced error handling for `git init` and `npm install` to ensure graceful exits on failure.
+
+---
+
+### [0.4.1](https://github.com/Adel2411/next-starter-template/compare/v0.4.0...v0.4.1) (2025-02-15)
+
+### Added
+
+- Added Logo of the CLI Tool.
+
+### Changed
+
+- Updated README.md file and GitHub repo description.
+
+---
 
 ## [0.4.0](https://github.com/Adel2411/next-starter-template/compare/v0.3.2...v0.4.0) (2025-02-13)
 
 ### Added
 
-- Add success color (green) and apply it to success toasts.
-- Add some animations.
+- Added success color (green) and applied it to success toasts.
+- Added some animations.
 
 ### Changed
 
-- Change current success toast to neutral toast.
-- Change Cypress test structure to make it more readable and beautiful.
-- Change landing and protect page title to fit the current template (mention next-platter too).
+- Changed current success toast to neutral toast.
+- Changed Cypress test structure to make it more readable and beautiful.
+- Changed landing and protect page title to fit the current template (mention next-platter too).
+
+---
 
 ### [0.3.2](https://github.com/Adel2411/next-starter-template/compare/v0.3.0...v0.3.2) (2025-02-08)
 
@@ -34,15 +55,17 @@ All notable changes to this project will be documented in this file. See [standa
 - Solved the install dependencies message glitching.
 - Removed initial commit creation step.
 
+---
+
 ## [0.3.0](https://github.com/Adel2411/next-starter-template/compare/v0.3.1...v0.3.0) (2025-02-08)
 
 ### Added
 
-- Initialize git by default and make initial commit.
+- Initialized git by default and made initial commit.
 
 ### Changed
 
-- Refactor "/" and "/protected" routes (remove features/home and features/protected folders).
+- Refactored "/" and "/protected" routes (removed features/home and features/protected folders).
 
 ### Fixed
 
