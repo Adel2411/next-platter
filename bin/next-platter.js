@@ -99,6 +99,32 @@ try {
     if (code === 0) {
       gitSpinner.succeed(chalk("Git repository initialized successfully!"));
 
+      // Add .gitignore file
+      const gitignoreContent = `
+# Ignore node_modules
+node_modules/
+
+# Ignore build files
+.next/
+out/
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore logs
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+      `;
+
+      fs.writeFileSync(
+        path.join(projectDir, ".gitignore"),
+        gitignoreContent.trim(),
+      );
+
       // Inform the user that the installation might take a while
       console.log(
         chalk.yellow("This might take a few minutes. Please be patient..."),
@@ -145,7 +171,9 @@ function installDependencies() {
     installProcess.on("close", (code) => {
       if (code === 0) {
         installSpinner.succeed(chalk("Dependencies installed successfully!"));
-        showCompletionMessage();
+
+        // Stage all changes and create an initial commit
+        createInitialCommit();
       } else {
         installSpinner.fail(chalk.red("Failed to install dependencies."));
         process.exit(1);
@@ -155,6 +183,46 @@ function installDependencies() {
     installSpinner.fail(chalk.red("Failed to install dependencies."));
     console.error(chalk.red(error.message));
     process.exit(1);
+  }
+}
+
+function createInitialCommit() {
+  const commitSpinner = ora(chalk.blue("Creating initial commit...")).start();
+
+  try {
+    // Stage all changes
+    const gitAddProcess = spawn("git", ["add", "."], { cwd: projectDir });
+
+    gitAddProcess.on("close", (code) => {
+      if (code === 0) {
+        // Create the initial commit
+        const gitCommitProcess = spawn(
+          "git",
+          ["commit", "-m", "Initial commit"],
+          { cwd: projectDir },
+        );
+
+        gitCommitProcess.on("close", (code) => {
+          if (code === 0) {
+            commitSpinner.succeed(
+              chalk("Initial commit created successfully!"),
+            );
+          } else {
+            commitSpinner.fail(chalk.red("Failed to create initial commit."));
+          }
+          showCompletionMessage();
+        });
+      } else {
+        commitSpinner.fail(
+          chalk.red("Failed to stage changes for initial commit."),
+        );
+        showCompletionMessage();
+      }
+    });
+  } catch (error) {
+    commitSpinner.fail(chalk.red("Failed to create initial commit."));
+    console.error(chalk.red(error.message));
+    showCompletionMessage();
   }
 }
 
