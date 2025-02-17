@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="template/public/Logo.svg" alt="Logo" width="80" height="80" />
+  <img src="template/public/Logo-Dark-removebg.png" alt="Logo" width="80" height="80" />
 </p>
 
 # Next-Platter: Next.js Project Scaffolding CLI
