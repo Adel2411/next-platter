@@ -1,6 +1,6 @@
 {
   "name": "next-platter",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A powerful CLI tool to quickly scaffold a Next.js application with a custom template, streamlining your development workflow.",
   "type": "module",
   "bin": {

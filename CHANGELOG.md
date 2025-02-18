@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/Adel2411/next-starter-template/compare/v0.5.1...v0.6.0) (2025-02-18)
+
 ## [0.6.0](https://github.com/Adel2411/next-platter/compare/v0.5.1...v0.6.0) (2025-02-18)
 
 ### Added
