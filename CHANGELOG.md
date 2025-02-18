@@ -2,16 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.5.1](https://github.com/Adel2411/next-starter-template/compare/v0.5.0...v0.5.1) (2025-02-16)
+## [0.6.0](https://github.com/Adel2411/next-platter/compare/v0.5.1...v0.6.0) (2025-02-18)
 
-## [0.5.1](https://github.com/Adel2411/next-starter-template/compare/v0.5.0...v0.5.1) (2025-02-16)
+### Added
+
+- Added select interface to ask user if he wants to install dependencies.
+- Added select interface to ask user if he wants to have a default git repository with initial commit from next-platter.
+
+---
+
+### [0.5.1](https://github.com/Adel2411/next-platter/compare/v0.5.0...v0.5.1) (2025-02-16)
 
 ### Added
 
 - Added a `.gitignore` file to the new project.
 - Created an initial commit after `npm install`.
 
-## [0.5.0](https://github.com/Adel2411/next-starter-template/compare/v0.4.1...v0.5.0) (2025-02-16)
+---
+
+## [0.5.0](https://github.com/Adel2411/next-platter/compare/v0.4.1...v0.5.0) (2025-02-16)
 
 ### Added
 
@@ -30,7 +39,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ---
 
-### [0.4.1](https://github.com/Adel2411/next-starter-template/compare/v0.4.0...v0.4.1) (2025-02-15)
+### [0.4.1](https://github.com/Adel2411/next-platter/compare/v0.4.0...v0.4.1) (2025-02-15)
 
 ### Added
 
@@ -42,7 +51,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ---
 
-## [0.4.0](https://github.com/Adel2411/next-starter-template/compare/v0.3.2...v0.4.0) (2025-02-13)
+## [0.4.0](https://github.com/Adel2411/next-platter/compare/v0.3.2...v0.4.0) (2025-02-13)
 
 ### Added
 
@@ -57,7 +66,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ---
 
-### [0.3.2](https://github.com/Adel2411/next-starter-template/compare/v0.3.0...v0.3.2) (2025-02-08)
+### [0.3.2](https://github.com/Adel2411/next-platter/compare/v0.3.0...v0.3.2) (2025-02-08)
 
 ### Fixed
 
@@ -66,7 +75,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ---
 
-## [0.3.0](https://github.com/Adel2411/next-starter-template/compare/v0.3.1...v0.3.0) (2025-02-08)
+## [0.3.0](https://github.com/Adel2411/next-platter/compare/v0.3.1...v0.3.0) (2025-02-08)
 
 ### Added
 
