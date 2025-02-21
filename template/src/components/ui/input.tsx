@@ -1,44 +1,21 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Eye, EyeOff } from "lucide-react";
+import * as React from "react"
 
-function Input({
-  className,
-  type,
-  disabled,
-  ...props
-}: React.ComponentProps<"input">) {
-  const [showPassword, setShowPassword] = React.useState(false);
+import { cn } from "@/lib/utils"
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
+function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
-    <div className="relative" data-slot="input-container">
-      <input
-        type={type === "password" && showPassword ? "text" : type}
-        className={cn(
-          "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          className,
-        )}
-        disabled={disabled}
-        data-slot="input"
-        {...props}
-      />
-      {type === "password" && (
-        <button
-          type="button"
-          disabled={disabled}
-          onClick={togglePasswordVisibility}
-          className="disabled:opacity-50 absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-          data-slot="toggle-password-visibility"
-        >
-          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-        </button>
+    <input
+      type={type}
+      data-slot="input"
+      className={cn(
+        "border-input file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        className
       )}
-    </div>
-  );
+      {...props}
+    />
+  )
 }
 
-export { Input };
+export { Input }

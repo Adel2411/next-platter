@@ -42,6 +42,7 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 /*
@@ -69,8 +70,6 @@
 }
 
 :root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(0 0% 3.9%);
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(0 0% 3.9%);
   --popover: hsl(0 0% 100%);
@@ -93,7 +92,9 @@
   --chart-3: hsl(197 37% 24%);
   --chart-4: hsl(43 74% 66%);
   --chart-5: hsl(27 87% 67%);
-  --radius: 0.5rem;
+  --radius: 0.6rem;
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 3.9%);
 }
 .dark {
   --background: hsl(0 0% 3.9%);
@@ -122,9 +123,13 @@
   --chart-5: hsl(340 75% 55%);
 }
 
+/*
+  ---break---
+*/
+
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
