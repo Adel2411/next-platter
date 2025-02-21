@@ -26,7 +26,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex justify-center pt-20 max-w-screen-lg">
+    <div className="flex justify-center pt-20 max-w-(--breakpoint-lg)">
       <div>
         <div className="text-center">
           <LetterPullUp words="Welcome to next-platter" />
