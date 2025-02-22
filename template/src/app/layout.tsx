@@ -5,7 +5,7 @@ import QueryProvider from "@/providers/QueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Footer } from "@/components/Footer";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -34,13 +34,15 @@ export default function RootLayout({
         >
           <QueryProvider>
             <div className="relative min-h-screen flex justify-center">
-              <main>{children}</main>
+              <main>
+                {children}
+                <Toaster position="bottom-right" />
+              </main>
               <div className="absolute right-4 top-4">
                 <ThemeToggle />
               </div>
             </div>
             <Footer />
-            <Toaster />
           </QueryProvider>
         </ThemeProvider>
       </body>

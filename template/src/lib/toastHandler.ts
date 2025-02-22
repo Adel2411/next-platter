@@ -1,25 +1,25 @@
-import { toast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 
 export function showErrorToast(message: string): void {
-  toast({
-    variant: "destructive",
-    title: "Error",
-    description: message,
-  });
+  toast.error(message);
 }
 
 export function showSuccessToast(message: string): void {
-  toast({
-    variant: "success",
-    title: "Success",
-    description: message,
-  });
+  toast.success(message);
 }
 
 export function showNeutralToast(message: string): void {
-  toast({
-    variant: "default",
-    title: "Neutral",
-    description: message,
+  toast(message);
+}
+
+export function showPromiseToast(
+  promise: Promise<unknown>,
+  message: string,
+): void {
+  toast.promise(promise, {
+    loading: "Loading...",
+    success: "Operation successful!",
+    error: "Operation failed!",
+    ...{ description: message },
   });
 }
