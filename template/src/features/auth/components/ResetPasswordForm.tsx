@@ -16,6 +16,7 @@ import { ResetPasswordBody, ResetPasswordInputs } from "../types";
 import { resetPasswordSchema } from "../schema";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLoadingStore } from "@/stores/loading";
+import { showErrorToast } from "@/lib/toastHandler";
 
 function ResetPasswordForm() {
   const { isLoading, setLoading } = useLoadingStore();
@@ -37,6 +38,7 @@ function ResetPasswordForm() {
     const { confirmPassword, ...valuesWithoutConfirmPassword } = values;
     if (!token) {
       console.log("Token not found");
+      showErrorToast("Token not found");
       form.reset();
       return;
     }

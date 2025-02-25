@@ -38,7 +38,7 @@ function ForgotPasswordForm() {
 
     // On success
     form.reset();
-    router.push("/reset-password");
+    router.push("/reset-password?token=abcd1234");
 
     setLoading(false);
   }
