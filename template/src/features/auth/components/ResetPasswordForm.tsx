@@ -16,7 +16,7 @@ import { ResetPasswordBody, ResetPasswordInputs } from "../types";
 import { resetPasswordSchema } from "../schema";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLoadingStore } from "@/stores/loading";
-import { showErrorToast } from "@/lib/toastHandler";
+import { showErrorToast, showPromiseToast } from "@/lib/toastHandler";
 
 function ResetPasswordForm() {
   const { isLoading, setLoading } = useLoadingStore();
@@ -33,7 +33,6 @@ function ResetPasswordForm() {
       confirmPassword: "",
     },
   });
-
   async function onSubmit(values: ResetPasswordInputs) {
     const { confirmPassword, ...valuesWithoutConfirmPassword } = values;
     if (!token) {
@@ -49,15 +48,20 @@ function ResetPasswordForm() {
       token,
     };
 
-    // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(body);
+    const resetPasswordPromise = new Promise(async (resolve, _) => {
+      // Simulate a network request
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(body);
 
-    // On success
-    form.reset();
-    router.push("/login");
+      // On success
+      form.reset();
+      router.push("/login");
 
-    setLoading(false);
+      resolve("Password reset successful");
+      setLoading(false);
+    });
+
+    showPromiseToast(resetPasswordPromise, "Resetting your password");
   }
 
   return (

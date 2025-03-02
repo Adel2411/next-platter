@@ -23,7 +23,7 @@ import { verifyEmailSchema } from "../schema";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useLoadingStore } from "@/stores/loading";
 import { useRouter } from "next/navigation";
-import { showSuccessToast } from "@/lib/toastHandler";
+import { showPromiseToast } from "@/lib/toastHandler";
 import { setToken } from "../api";
 
 function VerifyEmailForm() {
@@ -40,17 +40,19 @@ function VerifyEmailForm() {
   async function onSubmit(values: VerifyEmailInputs) {
     setLoading(true);
 
-    // Simulate a network request
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
-    console.log(values);
-    await setToken();
+    showPromiseToast(
+      (async () => {
+        console.log(values);
+        await setToken();
 
-    // On success
-    form.reset();
-    showSuccessToast("Registration successful");
-    router.push("/protected");
+        // On success
+        form.reset();
+        router.push("/protected");
 
-    setLoading(false);
+        setLoading(false);
+      })(),
+      "Verifying your email",
+    );
   }
 
   return (

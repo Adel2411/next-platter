@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import OAuthButtons from "./OAuthButtons";
 import { useLoadingStore } from "@/stores/loading";
+import { showPromiseToast } from "@/lib/toastHandler";
 
 function RegisterForm() {
   const { isLoading, setLoading } = useLoadingStore();
@@ -40,15 +41,20 @@ function RegisterForm() {
     const { confirmPassword, ...body } = values;
     setLoading(true);
 
-    // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(body);
+    const registrationPromise = new Promise(async (resolve, _) => {
+      // Simulate a network request
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(body);
 
-    // On success
-    form.reset();
-    router.push("/verify-email");
+      // On success
+      form.reset();
+      router.push("/verify-email");
 
-    setLoading(false);
+      resolve("Registration successful");
+      setLoading(false);
+    });
+
+    showPromiseToast(registrationPromise, "Registering your account");
   }
 
   return (

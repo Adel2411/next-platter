@@ -19,7 +19,7 @@ import Link from "next/link";
 import OAuthButtons from "./OAuthButtons";
 import { useLoadingStore } from "@/stores/loading";
 import { setToken } from "../api";
-import { showSuccessToast } from "@/lib/toastHandler";
+import { showPromiseToast } from "@/lib/toastHandler";
 import { useRouter } from "next/navigation";
 
 function LoginForm() {
@@ -37,17 +37,19 @@ function LoginForm() {
   async function onSubmit(values: LoginInputs) {
     setLoading(true);
 
-    // Simulate a network request
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
-    console.log(values);
-    await setToken();
+    showPromiseToast(
+      (async () => {
+        console.log(values);
+        await setToken();
 
-    // On success
-    form.reset();
-    showSuccessToast("Login successful");
-    router.push("/protected");
+        // On success
+        form.reset();
+        router.push("/protected");
 
-    setLoading(false);
+        setLoading(false);
+      })(),
+      "Logging in",
+    );
   }
 
   return (

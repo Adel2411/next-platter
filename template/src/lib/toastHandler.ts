@@ -5,7 +5,6 @@ const baseToastStyles = {
   style: {
     background: "var(--background)",
     color: "var(--foreground)",
-    border: "1px solid var(--border)",
   },
   iconTheme: {
     primary: "var(--primary)",

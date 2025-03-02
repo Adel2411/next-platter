@@ -16,6 +16,7 @@ import { ForgotPasswordInputs } from "../types";
 import { forgotPasswordSchema } from "../schema";
 import { useRouter } from "next/navigation";
 import { useLoadingStore } from "@/stores/loading";
+import { showPromiseToast } from "@/lib/toastHandler";
 
 function ForgotPasswordForm() {
   const { isLoading, setLoading } = useLoadingStore();
@@ -32,15 +33,20 @@ function ForgotPasswordForm() {
   async function onSubmit(values: ForgotPasswordInputs) {
     setLoading(true);
 
-    // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
+    const forgotPasswordPromise = new Promise(async (resolve, _) => {
+      // Simulate a network request
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(values);
 
-    // On success
-    form.reset();
-    router.push("/reset-password?token=abcd1234");
+      // On success
+      form.reset();
+      router.push("/reset-password?token=abcd1234");
 
-    setLoading(false);
+      resolve("Forgot password request successful");
+      setLoading(false);
+    });
+
+    showPromiseToast(forgotPasswordPromise, "Processing your request");
   }
 
   return (

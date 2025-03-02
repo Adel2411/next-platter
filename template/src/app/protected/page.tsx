@@ -4,7 +4,7 @@ import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
 import { features } from "@/constants";
 import { deleteToken } from "@/features/auth/api";
-import { showSuccessToast } from "@/lib/toastHandler";
+import { showPromiseToast } from "@/lib/toastHandler";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -15,11 +15,15 @@ export default function ProtectedPage() {
   const router = useRouter();
 
   const handleLogOut = async () => {
-    await deleteToken();
+    showPromiseToast(
+      (async () => {
+        await deleteToken();
 
-    // On success
-    showSuccessToast("Logout successful");
-    router.push("/");
+        // On success
+        router.push("/");
+      })(),
+      "Logging out",
+    );
   };
 
   const containerVariants = {
