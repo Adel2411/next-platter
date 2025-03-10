@@ -13,9 +13,26 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Starter Template",
-  description: "Next starter template to get you up and running quickly.",
-  keywords: ["Next.js", "Tailwind CSS", "TypeScript"],
+  title: "next-platter",
+  description:
+    "Production-ready Next.js 15 template with React 19, modular architecture, authentication flows, and enterprise features.",
+  keywords: [
+    "Next.js 15",
+    "React 19",
+    "TypeScript",
+    "Modular Architecture",
+    "Authentication",
+    "Shadcn/ui",
+    "Zustand",
+    "React Query",
+    "Framer Motion",
+    "Cypress",
+    "Docker",
+    "Tailwind CSS",
+  ],
+  creator: "Adel2411",
+  category: "Web Development",
+  applicationName: "next-platter",
 };
 
 export default function RootLayout({
