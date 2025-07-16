@@ -8,8 +8,56 @@ import ora from "ora";
 import boxen from "boxen";
 import inquirer from "inquirer";
 
+// Function to display help message
+function showHelp() {
+  const helpMessage = boxen(
+    chalk(`
+${chalk.bold.green('next-platter')} - A powerful CLI tool to quickly scaffold Next.js applications
+
+${chalk.bold('Usage:')}
+  next-platter [project-name] [options]
+
+${chalk.bold('Arguments:')}
+  project-name        Name of the new project (optional - will prompt if not provided)
+
+${chalk.bold('Options:')}
+  --help, -h         Show this help message
+
+${chalk.bold('Examples:')}
+  next-platter my-app
+  next-platter --help
+
+${chalk.bold('Features:')}
+  • Creates a new Next.js project with a custom template
+  • Optional git repository initialization
+  • Automatic dependency installation
+  • Pre-configured with TypeScript, Tailwind CSS, and more
+
+${chalk.bold('Description:')}
+  next-platter streamlines your development workflow by scaffolding
+  a complete Next.js application with authentication, components,
+  and modern development tools already configured.
+`),
+    {
+      padding: 1,
+      margin: 1,
+      borderStyle: "round",
+      borderColor: "green",
+    }
+  );
+
+  console.log(helpMessage);
+}
+
+// Check for help flag
+const args = process.argv.slice(2);
+if (args.includes('--help') || args.includes('-h')) {
+  showHelp();
+  process.exit(0);
+}
+
 // Get the project name from the command line
-let projectName = process.argv[2];
+let projectName = args.find(arg => !arg.startsWith('--') && arg !== '-h');
 
 if (!projectName) {
   const answers = await inquirer.prompt([
